@@ -107,7 +107,7 @@ const Status = () => {
                       activeBar === "Pending" ? <div className="icons" style={{ backgroundColor: "red" }} onClick={() => deletePatient(item._id)}><DeleteIcon /></div> : null
                     }
 
-                    <Link to={`/report/${item._id}`} className='icons'>
+                    <Link to={activeBar==="Completed"?`/prescription/${item._id}` : `/report/${item._id}`} className='icons'>
                       <DescriptionIcon />
                     </Link>
                   </div>

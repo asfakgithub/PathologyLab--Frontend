@@ -30,7 +30,7 @@ const HomeScreen = () => {
     })
   }
 
-  console.log(selectedDetailedTest)
+  // console.log(selectedDetailedTest)
 
   const handleClickNavLink = (index) => {
     setActiveIndexNav(index)

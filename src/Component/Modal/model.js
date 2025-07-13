@@ -3,18 +3,33 @@ import "./model.css"
 import axios from 'axios'
 
 function Model({ setOpenCreate, item }) {
-    const [input, setInput] = useState({ "name": "", "age": "", "address": "", "mobileNo": "", "examinedBy": "", "reportDate": "", "test": "", "examinedDate": "" })
+    const [input, setInput] = useState({
+        "name": item ? item.name : "",
+        "age": item ? item.age : "",
+        "address": item ? item.address : "",
+        "mobileNo": item ? item.mobileNo : "",
+        "examinedBy": item ? item.examinedBy : "",
+        "reportDate": item ? item.reportDate : "",
+        "test": item ? item.test : "",
+        "examinedDate": item ? item.examinedDate : ""
+    })
     const [listOfTest, setListOfTest] = useState([])
 
     useEffect(() => {
         handleSelectOption()
     }, [])
+    console.log(item)
 
     const handleSelectOption = async () => {
         await axios.get("http://localhost:8000/test/get").then(resposne => {
             const dataOne = resposne.data.data
             // console.log(dataOne)
             setListOfTest(dataOne)
+            if (!item) {
+                setInput({ ...input, test: dataOne[0]._id })
+            } else {
+                setInput({ ...input, test: item?.test })
+            }
 
         }).catch(err => {
             console.log(err)
@@ -23,20 +38,32 @@ function Model({ setOpenCreate, item }) {
     const handleInputs = (event) => {
         setInput({ ...input, [event.target.name]: event.target.value })
     }
-    // console.log(input)
+    console.log(input)
 
     const handleCreateNew = async () => {
-        await axios.post("http://localhost:8000/patient/post", input)
-            .then(resp => {
-                const dataOne = resp.data.data;
-                console.log("Data : ", dataOne);
-                // setListOfTest(dataOne);
-                setListOfTest(Array.isArray(dataOne) ? dataOne : Object.values(dataOne));
-                window.location.reload()
+        if (!item) {
+            await axios.post("http://localhost:8000/patient/post", input)
+                .then(resp => {
+                    const dataOne = resp.data.data;
+                    console.log("Data : ", dataOne);
+                    // setListOfTest(dataOne);
+                    setListOfTest(Array.isArray(dataOne) ? dataOne : Object.values(dataOne));
+                    window.location.reload()
+                })
+                .catch(err => {
+                    alert("Please fill every Details")
+                    console.log("err : ", err);
+                });
+        } else {
+            await axios.put(`http://localhost:8000/patient/${item._id}`, input).then(resp => {
+                console.log(resp)
+                window.location.reload();
+            }).catch(err => {
+                alert("Something Went Wrong")
+                    console.log(err)
+                
             })
-            .catch(err => {
-                console.log("err : ", err);
-            });
+        }
     };
 
     return (
@@ -84,7 +111,7 @@ function Model({ setOpenCreate, item }) {
                     <div className='inputRowModel'>
                         <div className='inputBox'>
                             <div className='input-label'>Selected Test</div>
-                            <select className='input-model' name='test' onChange={(e) => { handleInputs(e) }}>
+                            <select className='input-model' name='test' value={input.test} onChange={(e) => { handleInputs(e) }}>
                                 {
                                     listOfTest?.map((item, index) => {
                                         return (
