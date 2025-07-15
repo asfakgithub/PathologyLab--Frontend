@@ -5,7 +5,6 @@
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "license": "ISC",
   "author": "",
-  "type": "commonjs",
   "main": "index.js",
   "scripts": {
     "start": "react-scripts start",
@@ -27,12 +26,17 @@
     "jspdf": "^3.0.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^7.6.2",
-    "react-scripts": "5.0.1",
+    "react-router-dom": "^7.6.3",
+    "react-scripts": "^5.0.1",
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
-    "jest": "^27.5.1"
+    "@babel/core": "^7.28.0",
+    "babel-loader": "^10.0.0",
+    "jest": "^27.5.1",
+    "webpack": "^5.100.1",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.2"
   },
   "eslintConfig": {
     "extends": [
