@@ -60,8 +60,8 @@ function Model({ setOpenCreate, item }) {
                 window.location.reload();
             }).catch(err => {
                 alert("Something Went Wrong")
-                    console.log(err)
-                
+                console.log(err)
+
             })
         }
     };
@@ -125,14 +125,7 @@ function Model({ setOpenCreate, item }) {
                             <div className='input-label'>Report Date</div>
                             <input type='date' name='reportDate' className='input-model'
                                 onChange={(e) => { handleInputs(e) }} value={input.reportDate} placeholder='Report Date' />
-                            {/* <input
-                                type='date'
-                                name='reportDate'  // Changed to match state key
-                                value={input.reportDate}
-                                onChange={handleInputs}
-                                className='input-model'
-                                placeholder='Examined Date'
-                            /> */}
+
                         </div>
                     </div>
 
