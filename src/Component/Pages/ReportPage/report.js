@@ -24,7 +24,7 @@ function Report() {
       setPatientDetails(patData)
       setTestData(testData)
     }).then(err => {
-      // console.log(err)
+      console.log(err)
     })
   }
 

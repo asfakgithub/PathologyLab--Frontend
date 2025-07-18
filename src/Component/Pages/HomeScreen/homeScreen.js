@@ -70,7 +70,7 @@ const HomeScreen = () => {
 
       <div className='testHomeScreen'>
         <div className='leftPartTest'>
-          <p className='totalTest'>{listOfTest.length} Test Available</p>
+          <p className='totalTest'>{listOfTest?listOfTest.length:"No "} Test Available</p>
           <div className='testNameDiv'>
             {
               listOfTest?.map((item, index) => {
