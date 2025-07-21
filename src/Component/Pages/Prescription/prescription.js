@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import "./prescription.css"
-import imgLogo from "../../../assests/imgLogo.jpg"
+import LogoILabU from '../../Images/LogoILabU.png'
+
 import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas'
 import { useParams } from 'react-router-dom'
@@ -43,11 +44,11 @@ const Prescription = () => {
     <div className='prescription'>
       <div className='presdownload' id='pdfDownload'>
         <div className='header-logos'>
-          <img src={imgLogo} className='presc-logo' />
+          <img src={LogoILabU} className='presc-logo' />
           <div className='pathologyDesc'>
-            <div className='namePathology'>Zoho Pathology</div>
-            <div className='addressDetails'>Near Infosys, Hinjewadi Phase 2</div>
-            <div className='mobNo'>+91-1234567891</div>
+            <div className='namePathology'>I LAB YOU</div>
+            <div className='addressDetails'>Tarbagan,Dhuliyan,Murshidabad,742202,WestBengal</div>
+            <div className='mobNo'>+91-9609436103</div>
           </div>
         </div>
         <div className='patient-info'>
@@ -94,25 +95,33 @@ const Prescription = () => {
                 </tr>
               </thead>
               <tbody>
-                {
-                  patient?.result.map((item, id) => {
-                    return (
-                      <tr className='finalPresTableRow' key={id}>
-                        <td>{item.name}</td>
-                        <td>{item.range}</td>
-                        <td>{item.unit}</td>
-                        <td>{item.result}</td>
-                      </tr>
-                    )
-                  })
-                }
+                {/* Show subtests if available */}
+                {patient?.testData?.subtests && patient.testData.subtests.length > 0 ? (
+                  patient.testData.subtests.map((sub, id) => (
+                    <tr className='finalPresTableRow' key={sub._id || id}>
+                      <td>{sub.name}</td>
+                      <td>{sub.normalRange}</td>
+                      <td>{sub.unit || ''}</td>
+                      <td>{patient?.result?.[id]?.result || ''}</td>
+                    </tr>
+                  ))
+                ) : (
+                  patient?.result?.map((item, id) => (
+                    <tr className='finalPresTableRow' key={id}>
+                      <td>{item.name}</td>
+                      <td>{item.range}</td>
+                      <td>{item.unit}</td>
+                      <td>{item.result}</td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
             <div className='footer-prescription'>
               <div className='examinedBy'>
                 <div className='signature'>
                   <div>Tested By</div>
-                  <div>Dr Bashir Ahmed</div>
+                  <div>Sohel Islam</div>
                 </div>
                 <div className='signature'>
                   <div>Report Date</div>

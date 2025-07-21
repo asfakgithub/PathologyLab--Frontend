@@ -1,95 +1,147 @@
-.prescription{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    font-family: open-sans;
-    align-items: center;
+:root {
+  --primary: #148080;
+  --secondary: #2d6a6a;
+  --accent: #e7f9f9;
+  --bg: #f9f9f9;
+  --card-bg: #fff;
+  --border: #ccecec;
+  --shadow: 0 4px 16px rgba(20,128,128,0.08);
+  --radius: 14px;
+  --transition: 0.3s cubic-bezier(.4,0,.2,1);
 }
-.presdownload{
-    width: 60%;
-    margin-top: 5%;
-    padding: 1%;
-    background-color: whitesmoke;
+
+.prescription {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-.header-logos{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.presdownload {
+  width: 70%;
+  margin-top: 3rem;
+  padding: 2.5rem 3rem;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
 }
-.presc-logo{
-    width: 10%;
-    border-radius: 100%;
+.header-logos {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
 }
-.pathologyDesc{
-    display: flex;
-    flex-direction: column;
+.presc-logo {
+  width: 70px;
+  height: 70px;
+  border-radius: 100%;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(20,128,128,0.08);
 }
-.namePathology{
-    font-size: 24px;
-    margin-bottom: 5px;
+.pathologyDesc {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
-.addressDetails{
-    font-size: 12px;
-    margin-bottom: 4px;    
+.namePathology {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 0.3rem;
 }
-.patient-info{
-    display: flex;
-    flex-direction: column;
-    margin-top: 40px;
+.addressDetails {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 0.2rem;
 }
-.patient-info-row{
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
+.mobNo {
+  font-size: 1rem;
+  color: var(--secondary);
 }
-.info-details{
-    display: flex;
-    width: 30%;
+.patient-info {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+  gap: 1rem;
 }
-.info-details-age{
-    display: flex;
-    width: 15%;   
+.patient-info-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
 }
-.patient-name-value{
-    font-weight: 550;
+.info-details, .info-details-age {
+  display: flex;
+  width: 30%;
+  font-size: 1.1rem;
+  color: var(--secondary);
 }
-.result-section{
-    display: flex;
-    flex-direction: column;
-    padding: 20px 30px;
+.patient-name-value {
+  font-weight: 600;
+  margin-left: 0.5rem;
 }
-.testname-result{   /* particular-test */
-    font-size: 18px;
-    font-weight: 550;
+.result-section {
+  margin-top: 2.5rem;
+  background: var(--bg);
+  border-radius: var(--radius);
+  padding: 2rem 1.5rem;
+  box-shadow: 0 2px 8px rgba(20,128,128,0.04);
 }
-.table{
-    width: 100%;
-    margin-top: 20px;
-    /* border: 1px solid; */
+.table {
+  width: 100%;
+  margin-top: 1rem;
+  border-collapse: separate;
+  border-spacing: 0 0.5rem;
 }
-th{
-    text-align: left;
+th {
+  text-align: left;
+  color: var(--primary);
+  font-size: 1.1rem;
+  font-weight: 600;
 }
-.footer-prescription{
-    margin-top: 25%;
+.finalPresTableRow {
+  background: #f5fefe;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(20,128,128,0.04);
 }
-.examinedBy{
-    display: flex;
-    justify-content: space-between;
+.finalPresTableRow td {
+  padding: 0.7rem 1rem;
+  font-size: 1rem;
 }
-.signature{
-    display: flex;
-    flex-direction: column;
+.footer-prescription {
+  margin-top: 2.5rem;
+  display: flex;
+  justify-content: space-between;
 }
-.pdf-down-btn{
-    background-color: rgb(12, 187, 187);
-    padding: 10px;
-    border-radius: 5px;
-    margin-top: 20px;
-    cursor: pointer;
+.signature {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 1rem;
+  color: var(--secondary);
 }
-.finalPresTableRow{
-    margin-bottom: 20px;
+.pdf-down-btn {
+  background: var(--primary);
+  color: #fff;
+  border-radius: 6px;
+  padding: 0.7rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  margin: 2rem auto 0;
+  box-shadow: 0 2px 8px rgba(20,128,128,0.08);
+  border: none;
+  display: block;
+}
+.pdf-down-btn:hover {
+  background: var(--secondary);
+}
+@media (max-width: 900px) {
+  .presdownload {
+    width: 95%;
+    padding: 1.2rem 0.5rem;
+  }
 }

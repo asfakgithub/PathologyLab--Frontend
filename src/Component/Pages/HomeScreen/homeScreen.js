@@ -1,140 +1,210 @@
 import React, { useEffect, useState } from 'react';
-import "./homeScreen.css";
-import labPic1 from "../../../assests/labPic1.jpg"
-import data from "./data.json"
-import Footer from "../../Footer/index"
+import './homeScreen.css';
+import Footer from '../../Footer';
 import Model from '../../Modal/model';
-import axios from "axios"
+import axios from 'axios';
+import LogoILabU from '../../Images/LogoILabU.png'
 
 const HomeScreen = () => {
   const [listOfTest, setListOfTest] = useState([]);
-  const [activeIndexNav, setActiveIndexNav] = useState([])
-  const [selectedDetailedTest, setSelectedDetailedTest] = useState(null)
-  const [clickAddTest, setClickAddTest] = useState(false)
-
+  const [selectedDetailedTest, setSelectedDetailedTest] = useState(null);
+  const [clickAddTest, setClickAddTest] = useState(false);
+  const [showSubtestModal, setShowSubtestModal] = useState(false);
+  const [subtestMode, setSubtestMode] = useState('add'); // 'add' or 'edit'
+  const [subtestInput, setSubtestInput] = useState({
+    name: '',
+    description: '',
+    price: '',
+    normalRange: '',
+    abnormalRange: '',
+    _id: null
+  });
 
   useEffect(() => {
-    fetchedDataLoading();
-    // setSelectedDetailedTest(listOfTest[0])
-    console.log(selectedDetailedTest)
-  }, [])
-
-  const fetchedDataLoading = async () => {
-    await axios.get("http://localhost:8000/test/get").then(resposne => {
-      const dataOne = resposne.data.data
-      console.log(dataOne)
-      setListOfTest(dataOne)
-      setSelectedDetailedTest(dataOne[0])
-    }).catch(err => {
-      console.log(err)
-    })
-  }
-
-  // console.log(selectedDetailedTest)
-
-  const handleClickNavLink = (index) => {
-    setActiveIndexNav(index)
-    setSelectedDetailedTest(listOfTest[index])
-  }
-  // console.log(activeIndexNav)
-  const handleClosepopup = (val) => {
-    setClickAddTest(val)
-  }
-  return (
-    <div className='homeScreen'>
-      <div className='introHomeScreen'>
-        <div className='imgHomeScreen'>
-          <div className='imgDiv'>
-            <img src={labPic1} alt='labPic' className='labLogoHomeScreen' />
-          </div>
-          <div className='introPart'>
-            <div className='titleMini'>Enterprise Limited</div>
-            <div className='titleMajor'>Pathology Management System</div>
-            <div className='description1'>
-              The foundation for successful modern laboratories is a comprehensive lab operations management plan. This enables building and effectively executing an operating philosophy, leading to consistently meeting your scientific and business goals. Finding the partner who best helps your organization develop and execute this plan -from current operations to future strategies-will enable you to achieve this success.
-            </div>
-            <div className='description2'>
-              Our asset management programs bring over 40 years of experience in day-to-day lab operations. We can guide you on the journey to advance lab performance and elevate scientific productivity. Using a proven set of methodologies, products, and services with a focus on continuous innovation, together we can simplify, optimize, and transform your lab
-            </div>
-            <div className='topBtnsDiv'>
-              <div className='btns-div' onClick={() => setClickAddTest(true)}>
-                Create
-              </div>
-              <div className='btns-div'>
-                <a style={{ textDecoration: "none" }} href='#contact'>Contact</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className='testHomeScreen'>
-        <div className='leftPartTest'>
-          <p className='totalTest'>{listOfTest?listOfTest.length:"No "} Test Available</p>
-          <div className='testNameDiv'>
-            {
-              listOfTest?.map((item, index) => {
-                return <div
-                  onClick={() => { handleClickNavLink(index) }}
-                  className={`testNameTitle 
-                  ${activeIndexNav === index ? "activeNavLink" : null}`}
-                >
-                  {item.name}
-                </div>
-              })
-            }
-          </div>
-        </div>
-        <div className='rightPartTest'>
-          <div className='topRightPart'>
-            {selectedDetailedTest?.name}
-          </div>
-          <div className='bottomRightPart'>
-            <div className='topBottomRightPart'>
-              {selectedDetailedTest?.description}
-            </div>
-            <div className='bottomBottomRightPart'>
-              <div className='bBrightPartLeftSide'>
-                <div className='detailsBlock'>
-                  {"Fasting"} : <span className='spanColrChange'>{selectedDetailedTest?.fasting}</span>
-                </div>
-                <div className='detailsBlock'>
-                  {"Abnormal Range"} : <span className='spanColrChange'>{selectedDetailedTest?.abnormalRange}</span>
-                </div>
-                <div className='detailsBlock'>
-                  {"Normal Range"} : <span className='spanColrChange'>{selectedDetailedTest?.normalRange}</span>
-                </div>
-                <div className='detailsBlock'>
-                  {"Price"} : <span className='spanColrChange'>{selectedDetailedTest?.price}</span>
-                </div>
-              </div>
-              <div className='bBrightPartRightSide'>
-                <img src={selectedDetailedTest?.imgLink} alt='pic' className='bBrightImage' />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className='contactHomeScreen'>
-        <div className='contactFormTitle' id='contact'>Contact Form</div>
-        <div className='contactForm'>
-          <div className='inputFields'>
-            <input type='email' className='inputFieldsBox' placeholder='Enter your Email Id' />
-            <input type='text' className='inputFieldsBox' placeholder='Enter your name' />
-            <input type='number' className='inputFieldsBox' placeholder='Enter your Mobile No' />
-            <textarea type='textbox' className='inputTextAreaMessage' placeholder='Type your message here...' rows={10} />
-
-          </div>
-          <div className='sendEmailButton'>Send</div>
-        </div>
-      </div>
-      <Footer />
-      {
-        clickAddTest && <Model setOpenCreate={handleClosepopup} />
+    const fetchTests = async () => {
+      try {
+        const res = await axios.get('http://localhost:8000/Test/get');
+        if (res.data.status === 'Success') {
+          setListOfTest(res.data.data);
+          setSelectedDetailedTest(res.data.data[0]);
+        }
+      } catch (err) {
+        console.error('Error fetching tests:', err);
       }
-    </div>
-  )
-}
+    };
 
-export default HomeScreen
+    fetchTests();
+  }, []);
+
+  // Helper to refresh tests
+  const refreshTests = async () => {
+    try {
+      const res = await axios.get('http://localhost:8000/Test/get');
+      if (res.data.status === 'Success') {
+        setListOfTest(res.data.data);
+        setSelectedDetailedTest(res.data.data[0]);
+      }
+    } catch (err) {
+      console.error('Error fetching tests:', err);
+    }
+  };
+
+  // Add Subtest
+  const handleAddSubtest = async () => {
+    if (!subtestInput.name || !subtestInput.description || !subtestInput.price) {
+      alert('Please fill in all required subtest fields.');
+      return;
+    }
+    try {
+      await axios.post(`http://localhost:8000/Test/subtest/${selectedDetailedTest._id}`, subtestInput);
+      setShowSubtestModal(false);
+      setSubtestInput({ name: '', description: '', price: '', normalRange: '', abnormalRange: '', _id: null });
+      refreshTests();
+    } catch (err) {
+      alert('Failed to add subtest.');
+    }
+  };
+
+  // Edit Subtest
+  const handleEditSubtest = (sub) => {
+    setSubtestInput(sub);
+    setSubtestMode('edit');
+    setShowSubtestModal(true);
+  };
+
+  const handleUpdateSubtest = async () => {
+    try {
+      await axios.put(`http://localhost:8000/Test/subtest/${selectedDetailedTest._id}/${subtestInput._id}`, subtestInput);
+      setShowSubtestModal(false);
+      setSubtestInput({ name: '', description: '', price: '', normalRange: '', abnormalRange: '', _id: null });
+      refreshTests();
+    } catch (err) {
+      alert('Failed to update subtest.');
+    }
+  };
+
+  // Delete Subtest
+  const handleDeleteSubtest = async (sub) => {
+    if (!window.confirm('Delete this subtest?')) return;
+    try {
+      await axios.delete(`http://localhost:8000/Test/subtest/${selectedDetailedTest._id}/${sub._id}`);
+      refreshTests();
+    } catch (err) {
+      alert('Failed to delete subtest.');
+    }
+  };
+
+  // Modal input change
+  const handleSubtestInputChange = (e) => {
+    setSubtestInput({ ...subtestInput, [e.target.name]: e.target.value });
+  };
+
+  return (
+    <div className="homeScreen">
+      <section className="dashboardSummary">
+  <div className="summaryCard total">
+    <h3>Total Tests</h3>
+    <p>{listOfTest.length}</p>
+  </div>
+  <div className="summaryCard completed">
+    <h3>Completed</h3>
+    <p>{listOfTest.length}</p>
+  </div>
+  <div className="summaryCard pending">
+    <h3>Pending</h3>
+    <p>{listOfTest.length}</p>
+  </div>
+  <div className="summaryCard patients">
+    <h3>Patients</h3>
+    <p>{listOfTest.length}</p>
+  </div>
+</section>
+
+      <section className="testCardSection">
+        <h2 className="sectionTitle">Available Lab Tests</h2>
+        <div className="testCardGrid">
+          {listOfTest.map((test, index) => (
+            <div key={test._id || index} className="testCard" onClick={() => setSelectedDetailedTest(test)}>
+              {/* here not sign is used if test image url is not there if we get Url then that Url should be shown */}
+              {!test.imgLink && (
+                <img
+                  src={LogoILabU}
+                  alt={`${test.name} preview`}
+                  className="testCardImage"
+                />
+              )}
+              <h3>{test.name}</h3>
+              <p className="testCardDescription">{test.description}</p>
+              <p><strong>Price:</strong> ₹{test.price}</p>
+              <p><strong>Fasting:</strong> {test.fasting}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {selectedDetailedTest && (
+        <section className="testDetails">
+          <h2>Details for {selectedDetailedTest.name}</h2>
+          <p>{selectedDetailedTest.description}</p>
+          <ul>
+            <li><strong>Fasting:</strong> {selectedDetailedTest.fasting}</li>
+            <li><strong>Normal Range:</strong> {selectedDetailedTest.normalRange}</li>
+            <li><strong>Abnormal Range:</strong> {selectedDetailedTest.abnormalRange}</li>
+            <li><strong>Price:</strong> ₹{selectedDetailedTest.price}</li>
+          </ul>
+          {/* Subtests Section */}
+          <div className="subtestsSection">
+            <h3>Subtests</h3>
+            {selectedDetailedTest.subtests && selectedDetailedTest.subtests.length > 0 ? (
+              <ul>
+                {selectedDetailedTest.subtests.map((sub, idx) => (
+                  <li key={sub._id || idx} className="subtestItem">
+                    <strong>{sub.name}</strong>: {sub.description} | Price: ₹{sub.price} | Normal: {sub.normalRange} | Abnormal: {sub.abnormalRange}
+                    <button onClick={() => handleEditSubtest(sub)} className="editSubtestBtn">Edit</button>
+                    <button onClick={() => handleDeleteSubtest(sub)} className="deleteSubtestBtn">Delete</button>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>No subtests available.</p>
+            )}
+            <button onClick={() => { setShowSubtestModal(true); setSubtestMode('add'); setSubtestInput({ name: '', description: '', price: '', normalRange: '', abnormalRange: '', _id: null }); }} className="addSubtestBtn">Add Subtest</button>
+          </div>
+        </section>
+      )}
+      {/* Subtest Modal */}
+      {showSubtestModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3>{subtestMode === 'add' ? 'Add Subtest' : 'Edit Subtest'}</h3>
+            <input type="text" name="name" placeholder="Name" value={subtestInput.name} onChange={handleSubtestInputChange} />
+            <input type="text" name="description" placeholder="Description" value={subtestInput.description} onChange={handleSubtestInputChange} />
+            <input type="number" name="price" placeholder="Price" value={subtestInput.price} onChange={handleSubtestInputChange} />
+            <input type="text" name="normalRange" placeholder="Normal Range" value={subtestInput.normalRange} onChange={handleSubtestInputChange} />
+            <input type="text" name="abnormalRange" placeholder="Abnormal Range" value={subtestInput.abnormalRange} onChange={handleSubtestInputChange} />
+            <button onClick={subtestMode === 'add' ? handleAddSubtest : handleUpdateSubtest}>
+              {subtestMode === 'add' ? 'Add' : 'Update'}
+            </button>
+            <button onClick={() => setShowSubtestModal(false)}>Cancel</button>
+          </div>
+        </div>
+      )}
+
+      <section className="contactHomeScreen" id="contact">
+        <h2>Contact Us</h2>
+        <div className="contactForm">
+          <input type="email" placeholder="Email" />
+          <input type="text" placeholder="Name" />
+          <input type="number" placeholder="Phone" />
+          <textarea rows="4" placeholder="Your message..." />
+          <button className="sendEmailButton">Send</button>
+        </div>
+      </section>
+
+      <Footer />
+      {clickAddTest && <Model setOpenCreate={setClickAddTest} />}
+    </div>
+  );
+};
+
+export default HomeScreen;

@@ -11,7 +11,7 @@ function Report() {
 
   useEffect(() => {
     fetchedOnLoading()
-  })
+  }, []) // fix: add dependency array
 
   // console.log(patientDetails);
   // console.log(testData)
@@ -76,37 +76,59 @@ function Report() {
           <div className='report-tests'>
             <div className='nameOfTest'>{testData?.name}</div>
           </div>
+          {/* Subtest-aware input rows */}
           <div className='inputRows'>
-            {
-              inputField.map((item, index) => {
-                return (
-                  <div className='inputRow'>
-                    <div className="input-row-group">
-                      <div className='input-test-name'>Test Name</div>
-                      <input type='text' value={item.name} name='name' onChange={(e) => { onchangeInput(e, item.id) }} className='input-field-tests' />
-                    </div>
-                    <div className="input-row-group">
-                      <div className='input-test-name'>Normal Range</div>
-                      <input type='text' value={item.range} name='range' onChange={(e) => { onchangeInput(e, item.id) }} className='input-field-tests' />
-                    </div>
-                    <div className="input-row-group">
-                      <div className='input-test-name'>Unit</div>
-                      <input type='text' value={item.unit} name='unit' onChange={(e) => { onchangeInput(e, item.id) }} className='input-field-tests' />
-                    </div>
-                    <div className="input-row-group">
-                      <div className='input-test-name'>Result</div>
-                      <input type='text' value={item.result} name='result' onChange={(e) => { onchangeInput(e, item.id) }} className='input-field-tests' />
-                    </div>
+            {testData?.subtests && testData.subtests.length > 0 ? (
+              testData.subtests.map((sub, index) => (
+                <div className='inputRow' key={sub._id || index}>
+                  <div className="input-row-group">
+                    <div className='input-test-name'>Subtest Name</div>
+                    <input type='text' value={inputField[index]?.name || sub.name} name='name' onChange={(e) => { onchangeInput(e, index) }} className='input-field-tests' />
                   </div>
-                )
-              })
-            }
-
+                  <div className="input-row-group">
+                    <div className='input-test-name'>Normal Range</div>
+                    <input type='text' value={inputField[index]?.range || sub.normalRange} name='range' onChange={(e) => { onchangeInput(e, index) }} className='input-field-tests' />
+                  </div>
+                  <div className="input-row-group">
+                    <div className='input-test-name'>Unit</div>
+                    <input type='text' value={inputField[index]?.unit || ''} name='unit' onChange={(e) => { onchangeInput(e, index) }} className='input-field-tests' />
+                  </div>
+                  <div className="input-row-group">
+                    <div className='input-test-name'>Result</div>
+                    <input type='text' value={inputField[index]?.result || ''} name='result' onChange={(e) => { onchangeInput(e, index) }} className='input-field-tests' />
+                  </div>
+                </div>
+              ))
+            ) : (
+              inputField.map((item, index) => (
+                <div className='inputRow' key={item.id}>
+                  <div className="input-row-group">
+                    <div className='input-test-name'>Test Name</div>
+                    <input type='text' value={item.name} name='name' onChange={(e) => { onchangeInput(e, item.id) }} className='input-field-tests' />
+                  </div>
+                  <div className="input-row-group">
+                    <div className='input-test-name'>Normal Range</div>
+                    <input type='text' value={item.range} name='range' onChange={(e) => { onchangeInput(e, item.id) }} className='input-field-tests' />
+                  </div>
+                  <div className="input-row-group">
+                    <div className='input-test-name'>Unit</div>
+                    <input type='text' value={item.unit} name='unit' onChange={(e) => { onchangeInput(e, item.id) }} className='input-field-tests' />
+                  </div>
+                  <div className="input-row-group">
+                    <div className='input-test-name'>Result</div>
+                    <input type='text' value={item.result} name='result' onChange={(e) => { onchangeInput(e, item.id) }} className='input-field-tests' />
+                  </div>
+                </div>
+              ))
+            )}
             <div className='btn-grp-add-rem'>
-              <div className='add-btn-row' onClick={addinputRows}>Add</div>
-              {
-                inputField.length > 1 ? <div className='add-btn-row' onClick={removeRows}>Remove</div> : null
-              }
+              {/* Hide add/remove if subtests exist */}
+              {!(testData?.subtests && testData.subtests.length > 0) && (
+                <>
+                  <div className='add-btn-row' onClick={addinputRows}>Add</div>
+                  {inputField.length > 1 ? <div className='add-btn-row' onClick={removeRows}>Remove</div> : null}
+                </>
+              )}
               <Link to={`/prescription/${id}`} className='add-btn-row' onClick={handleFinalSubmit}>Report</Link>
             </div>
           </div>
