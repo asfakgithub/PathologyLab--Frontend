@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .report-page{
     width: 100%;
     /* border: 1px solid; */
@@ -90,4 +91,119 @@
     color: black;
     margin-right: 10px;
     cursor: pointer;
+=======
+:root {
+  --primary: #148080;
+  --secondary: #2d6a6a;
+  --accent: #e7f9f9;
+  --bg: #f9f9f9;
+  --card-bg: #fff;
+  --border: #ccecec;
+  --shadow: 0 4px 16px rgba(20,128,128,0.08);
+  --radius: 14px;
+  --transition: 0.3s cubic-bezier(.4,0,.2,1);
+}
+
+.report-page {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--bg);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  padding-top: 60px;
+}
+.reportDiv {
+  width: 70%;
+  margin: 0 auto;
+  border-radius: var(--radius);
+  background: var(--card-bg);
+  box-shadow: var(--shadow);
+  padding: 3rem 4rem;
+  border: 1px solid var(--border);
+}
+.report-infos {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+.report-info {
+  font-size: 1.1rem;
+  color: var(--primary);
+  font-weight: 600;
+}
+.report-inputBlock {
+  margin-top: 30px;
+  width: 100%;
+}
+.report-tests {
+  margin-bottom: 1.5rem;
+}
+.nameOfTest {
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--secondary);
+}
+.inputRows {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.inputRow {
+  display: flex;
+  gap: 2rem;
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+  box-shadow: 0 1px 4px rgba(20,128,128,0.04);
+}
+.input-row-group {
+  display: flex;
+  flex-direction: column;
+  min-width: 120px;
+}
+.input-test-name {
+  font-size: 0.95rem;
+  color: var(--secondary);
+  margin-bottom: 0.2rem;
+}
+.input-field-tests {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  background: #f5fefe;
+  transition: var(--transition);
+}
+.input-field-tests:focus {
+  outline: 2px solid var(--primary);
+  background: #fff;
+}
+.btn-grp-add-rem {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.add-btn-row {
+  background: var(--primary);
+  color: #fff;
+  border-radius: 6px;
+  padding: 0.7rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+  border: none;
+  box-shadow: 0 2px 8px rgba(20,128,128,0.08);
+}
+.add-btn-row:hover {
+  background: var(--secondary);
+}
+@media (max-width: 900px) {
+  .reportDiv {
+    width: 95%;
+    padding: 1.5rem 0.5rem;
+  }
+>>>>>>> 392d542084933c5a1b9c85a4653943df4ba14587
 }
