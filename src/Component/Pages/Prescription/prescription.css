@@ -1,0 +1,114 @@
+.prescription{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: open-sans;
+    align-items: center;
+}
+.presdownload{
+    width: 60%;
+    margin-top: 5%;
+    padding: 1%;
+    background-color: whitesmoke;
+}
+.header-logos{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.presc-logo{
+    width: 10%;
+    border-radius: 100%;
+}
+.PrescriptionDesc{
+    display: flex;
+    flex-direction: column;
+}
+.namePrescription{
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+.addressDetails{
+    font-size: 12px;
+    margin-bottom: 4px;    
+}
+.patient-info{
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+}
+.patient-info-row{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+.info-details{
+    display: flex;
+    width: 30%;
+}
+.info-details-age{
+    display: flex;
+    width: 15%;   
+}
+.patient-name-value{
+    font-weight: 550;
+}
+.result-section{
+    display: flex;
+    flex-direction: column;
+    padding: 20px 30px;
+}
+.pres-section-group {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin-bottom: 32px;
+}
+.pres-section {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 18px 20px 12px 20px;
+    margin-bottom: 0;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+}
+.section-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+.section-divider {
+    border: none;
+    border-top: 1.5px solid #bdbdbd;
+    margin: 0 0 10px 0;
+}
+.section-content {
+    width: 100%;
+    min-height: 40px;
+    font-size: 15px;
+    background: #fafafa;
+    border-radius: 5px;
+    padding: 8px 10px;
+    color: #222;
+    white-space: pre-line;
+}
+.footer-prescription{
+    margin-top: 25%;
+}
+.examinedBy{
+    display: flex;
+    justify-content: space-between;
+}
+.signature{
+    display: flex;
+    flex-direction: column;
+}
+.pdf-down-btn{
+    background-color: rgb(12, 187, 187);
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+}

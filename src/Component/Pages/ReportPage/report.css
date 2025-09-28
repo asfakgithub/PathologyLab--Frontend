@@ -1,0 +1,93 @@
+.report-page{
+    width: 100%;
+    /* border: 1px solid; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 60px;
+}
+.reportDiv{
+    width: 60%;
+    border: 1px solid rgb(218, 214, 214);
+    background-color: whitesmoke;
+    padding: 5%;
+}
+.report-infos{
+    display: flex;
+    justify-content: space-between;
+}
+.report-inputBlock{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    /* border: 1px solid; */
+}
+.report-tests{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.nameOfTest{
+    font-weight: 600;
+    font-size: 18px;
+}
+.inputRows{
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+.report-section-group {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin-bottom: 32px;
+}
+.report-section {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 18px 20px 12px 20px;
+    margin-bottom: 0;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+}
+.section-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+.section-divider {
+    border: none;
+    border-top: 1.5px solid #bdbdbd;
+    margin: 0 0 10px 0;
+}
+.section-textarea {
+    width: 100%;
+    min-height: 40px;
+    border: 1px solid #d8d8d8;
+    border-radius: 5px;
+    padding: 8px 10px;
+    font-size: 15px;
+    resize: vertical;
+    background: #fafafa;
+}
+.input-field-tests:focus{
+    outline: none;
+}
+.btn-grp-add-rem{
+    display: flex;
+}
+.add-btn-row{
+    background-color: rgb(218, 214, 214);
+    width: 60px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    text-decoration: none;
+    color: black;
+    margin-right: 10px;
+    cursor: pointer;
+}
